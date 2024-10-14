@@ -34,7 +34,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-
+  http: ^0.13.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -55,7 +55,17 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - lib/assets/Outfit-Regular.ttf
+    - lib/assets/Outfit-Bold.ttf
 
+  fonts:
+    - family: Outfit
+      fonts:
+        - asset: lib/assets/Outfit-Regular.ttf
+          weight: 400
+        - asset: lib/assets/Outfit-Bold.ttf
+          weight: 700
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -72,17 +82,17 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #     - family: Outfit
-  #       fonts:
-  #           - asset: assets/Outfit-Regular.ttf
-  #           - asset: assets/Outfit-Bold.ttf
+#   fonts:
+#     - family: Outfit
+#       fonts:
+#         - asset: assets/Outfit-Regular.ttf
+#         - asset: assets/Outfit-Bold.ttf
 
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/to/font-from-package
+#   - family: Trajan Pro
+#     fonts:
+#       - asset: fonts/TrajanPro.ttf
+#       - asset: fonts/TrajanPro_Bold.ttf
+#         weight: 700
+#
+# For details regarding fonts from package dependencies,
+# see https://flutter.dev/to/font-from-package
