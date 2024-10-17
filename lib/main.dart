@@ -1,9 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/signin.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+class QrCodeScanner extends StatelessWidget {
+  QrCodeScanner({super.key});
+
+  final MobileScannerController controller = MobileScannerController();
+
+  @override
+  Widget build(BuildContext context) {
+    return MobileScanner(
+      controller: controller,
+      onDetect: (BarcodeCapture capture) {
+        final List<Barcode> barcodes = capture.barcodes;
+
+        for (final barcode in barcodes) {
+          print(barcode.rawValue);
+        }
+      },
+    );
+  }
 }
 
 // Create an InheritedWidget for state management
@@ -12,11 +34,11 @@ class ResponseState extends InheritedWidget {
   final Function(String) updateResponseMessage;
 
   const ResponseState({
-    Key? key,
+    super.key,
     required this.responseMessage,
     required this.updateResponseMessage,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   static ResponseState? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ResponseState>();
@@ -45,9 +67,18 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
+  Future<void> getVinNumbers(String vinnumber) async {
+    final url = Uri.parse(
+        'http://192.168.88.1:5000/api/vin'); // Replace with your API URL
+    final response = await http.get(url, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
+    responseMessage = '${response}';
+  }
+
   Future<void> sendVinNumber(String vin) async {
     final url = Uri.parse(
-        'https://your-api-url.com/endpoint'); // Replace with your API URL
+        'http://10.2.5.204:5000/api/vin'); // Replace with your API URL
     final response = await http.post(
       url,
       headers: <String, String>{
@@ -145,7 +176,7 @@ class SearchWidget extends StatelessWidget {
 
     Future<void> sendVinNumber(String vin) async {
       final url = Uri.parse(
-          'https://your-api-url.com/endpoint'); // Replace with your API URL
+          'http://10.2.5.204:5000/api/vin'); // Replace with your API URL
       final response = await http.post(
         url,
         headers: <String, String>{
@@ -157,7 +188,8 @@ class SearchWidget extends StatelessWidget {
       );
 
       if (response.statusCode == 200) {
-        responseState?.updateResponseMessage('Success: ${response.body}');
+        responseState
+            ?.updateResponseMessage(jsonDecode(response.body)['message']);
       } else {
         responseState?.updateResponseMessage('Error: ${response.statusCode}');
       }
@@ -176,6 +208,9 @@ class SearchWidget extends StatelessWidget {
       child: Column(
         children: [
           TextField(
+            onSubmitted: (value) {
+              _onSubmit();
+            },
             controller: myController,
             decoration: InputDecoration(
               hintText: 'Search VIN Number',
@@ -201,10 +236,6 @@ class SearchWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: _onSubmit,
-            child: const Text('Submit'),
-          ),
         ],
       ),
     );
@@ -218,24 +249,55 @@ class Footer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 20, bottom: 20),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(
+          const Icon(
             Icons.home,
             size: 24,
             color: Colors.black,
           ),
-          Icon(
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+            ),
+            onPressed: () {
+              // Используем Navigator для перехода к новому экрану с QrCodeScanner
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => QrCodeScanner()),
+              );
+            },
+            child: Icon(
+              Icons.qr_code_2_sharp,
+              size: 24,
+              color: Colors.black,
+            ),
+          ),
+          const Icon(
             Icons.card_membership,
             size: 24,
             color: Colors.black,
           ),
-          Icon(
-            Icons.person,
-            size: 24,
-            color: Colors.black,
-          ),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 15.0),
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SignInPage()));
+              },
+              child: const Icon(
+                Icons.person,
+                size: 24,
+                color: Colors.black,
+              )),
         ],
       ),
     );
@@ -273,10 +335,13 @@ class ListOfItems extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Text(
-            responseState?.responseMessage ??
-                '', // Display the response message
-            style: const TextStyle(fontSize: 16, color: Colors.black),
+          Padding(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Text(
+              responseState?.responseMessage ??
+                  '', // Display the response message
+              style: const TextStyle(fontSize: 16, color: Colors.black),
+            ),
           ),
         ],
       ),
