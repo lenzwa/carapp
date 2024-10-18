@@ -37,7 +37,7 @@ dependencies:
   http: ^0.13.4
   camera: ^0.9.4+19
   mobile_scanner: ^5.1.1
-  barcode_scan_fix: ^1.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
