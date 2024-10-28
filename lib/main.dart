@@ -196,11 +196,11 @@ class MyHomePage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => ProfilePage()),
+                  (Route<dynamic> route) => false,
                 );
-                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -209,12 +209,11 @@ class MyHomePage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => QuestionsPage()),
+                  (Route<dynamic> route) => false,
                 );
-
-                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -223,11 +222,11 @@ class MyHomePage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => AdressesPage()),
+                  MaterialPageRoute(builder: (context) => ContactsPage()),
+                  (Route<dynamic> route) => false,
                 );
-                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -236,11 +235,11 @@ class MyHomePage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => ContactsPage()),
+                  (Route<dynamic> route) => false,
                 );
-                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -249,9 +248,10 @@ class MyHomePage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => BonusesPage()),
+                  (Route<dynamic> route) => false,
                 );
               },
             ),

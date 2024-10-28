@@ -45,15 +45,22 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Sign in to CarApp',
-          style: TextStyle(color: Colors.white),
-        ),
         backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(onPressed: () {}, icon: Container(Icon(Icons.arrow_back_ios_sharp))
-        ],
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_sharp,
+            color: Colors.white,
+          ), // Здесь укажите иконку
+          onPressed: () {
+            // Действие при нажатии на иконку
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => MyHomePage()),
+              (Route<dynamic> route) => false,
+            );
+          },
+        ),
       ),
       backgroundColor: Colors.black,
       body: Column(children: [
@@ -75,9 +82,11 @@ class _SignInPageState extends State<SignInPage> {
                   height: 8,
                 ),
                 TextField(
-                  controller: emailController,
+                  style: TextStyle(color: Colors.white),
+                  cursorColor: Colors.white,
+                  controller: passwordController,
                   decoration: InputDecoration(
-                    labelText: 'hello@company.com',
+                    labelText: 'aisultan@example.com',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                       borderSide: const BorderSide(
@@ -85,9 +94,23 @@ class _SignInPageState extends State<SignInPage> {
                         style: BorderStyle.none,
                       ),
                     ),
+                    focusColor: Colors.white,
+                    hoverColor: Colors.white,
                     filled: true,
+                    labelStyle:
+                        TextStyle(color: const Color.fromARGB(255, 54, 52, 52)),
                     fillColor: Colors.transparent,
                     contentPadding: const EdgeInsets.only(left: 30),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: const Color.fromARGB(255, 26, 25,
+                              25)), // Цвет рамки, когда поле активно
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color:
+                              Colors.white), // Цвет рамки, когда поле в фокусе
+                    ),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -104,6 +127,8 @@ class _SignInPageState extends State<SignInPage> {
                   height: 8,
                 ),
                 TextField(
+                  style: TextStyle(color: Colors.white),
+                  cursorColor: Colors.white,
                   controller: passwordController,
                   decoration: InputDecoration(
                     labelText: 'Your password',
@@ -114,9 +139,23 @@ class _SignInPageState extends State<SignInPage> {
                         style: BorderStyle.none,
                       ),
                     ),
+                    focusColor: Colors.white,
+                    hoverColor: Colors.white,
                     filled: true,
+                    labelStyle:
+                        TextStyle(color: const Color.fromARGB(255, 54, 52, 52)),
                     fillColor: Colors.transparent,
                     contentPadding: const EdgeInsets.only(left: 30),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: const Color.fromARGB(255, 26, 25,
+                              25)), // Цвет рамки, когда поле активно
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color:
+                              Colors.white), // Цвет рамки, когда поле в фокусе
+                    ),
                   ),
                   obscureText: true,
                 ),
