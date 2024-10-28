@@ -50,6 +50,10 @@ class _SignInPageState extends State<SignInPage> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(onPressed: () {}, icon: Container(Icon(Icons.arrow_back_ios_sharp))
+        ],
       ),
       backgroundColor: Colors.black,
       body: Column(children: [
