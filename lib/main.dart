@@ -1,31 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/bonuses.dart';
+import 'package:flutter_application_1/pages/contacts.dart';
+import 'package:flutter_application_1/pages/profile.dart';
 import 'package:flutter_application_1/pages/signin.dart';
+import 'package:flutter_application_1/pages/adresses.dart';
+import 'package:flutter_application_1/pages/questions.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:mobile_scanner/mobile_scanner.dart';
 
 void main() {
   runApp(const MyApp());
-}
-
-class QrCodeScanner extends StatelessWidget {
-  QrCodeScanner({super.key});
-
-  final MobileScannerController controller = MobileScannerController();
-
-  @override
-  Widget build(BuildContext context) {
-    return MobileScanner(
-      controller: controller,
-      onDetect: (BarcodeCapture capture) {
-        final List<Barcode> barcodes = capture.barcodes;
-
-        for (final barcode in barcodes) {
-          print(barcode.rawValue);
-        }
-      },
-    );
-  }
 }
 
 // Create an InheritedWidget for state management
@@ -73,7 +57,7 @@ class _MyAppState extends State<MyApp> {
     final response = await http.get(url, headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
-    responseMessage = '${response}';
+    responseMessage = '$response';
   }
 
   Future<void> sendVinNumber(String vin) async {
@@ -140,6 +124,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
@@ -147,20 +132,131 @@ class MyHomePage extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: false,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(
-              Icons.menu,
-              color: Colors.black,
-              size: 28,
-            ),
-          ),
+        actions: [
+          Builder(
+              builder: (context) => ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(
+                        Colors.transparent), // Прозрачный фон
+                    elevation: WidgetStateProperty.all(0), // Убирает тень
+
+                    minimumSize: WidgetStateProperty.all(
+                        Size.zero), // Убирает минимальный размер
+                    tapTargetSize: MaterialTapTargetSize
+                        .shrinkWrap, // Сокращает область клика
+                    shape: WidgetStateProperty.all(const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.zero, // Убирает закругления углов
+                      side: BorderSide.none, // Убирает бордер
+                    )),
+                    overlayColor: WidgetStateProperty.all(
+                        Colors.transparent), // Убирает цвет при нажатии
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  child: const Icon(
+                    color: Colors.black,
+                    Icons.menu,
+                    size: 28,
+                  )))
         ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [SearchWidget(), ListOfItems(), Footer()],
+        children: [const ListOfItems(), const Footer()],
+      ),
+      drawer: Drawer(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Car app',
+                    style: TextStyle(
+                        fontFamily: 'Outfit',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 32),
+                  )
+                ],
+              ),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 75, 75, 75),
+              ),
+            ),
+            ListTile(
+              title: Text(
+                'Профиль',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Вопросы',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuestionsPage()),
+                );
+
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Адреса сервиса',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => AdressesPage()),
+                );
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Контакты',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => ContactsPage()),
+                );
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Бонусы',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BonusesPage()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -248,7 +344,7 @@ class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 20, bottom: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -266,10 +362,6 @@ class Footer extends StatelessWidget {
             ),
             onPressed: () {
               // Используем Navigator для перехода к новому экрану с QrCodeScanner
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => QrCodeScanner()),
-              );
             },
             child: Icon(
               Icons.qr_code_2_sharp,
@@ -314,6 +406,14 @@ class ListOfItems extends StatelessWidget {
     return Expanded(
       child: ListView(
         children: [
+          Container(
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Padding(padding: EdgeInsets.only(top: 100, bottom: 100)),
+              Text('Welcome Home',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold))
+            ]),
+          ),
+          const SearchWidget(),
           SizedBox(
             height: 200,
             child: ListView.separated(
@@ -343,6 +443,164 @@ class ListOfItems extends StatelessWidget {
               style: const TextStyle(fontSize: 16, color: Colors.black),
             ),
           ),
+          Container(
+            height: 140,
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Row(
+                    children: [
+                      Text(
+                        '10.00%',
+                        style: TextStyle(fontSize: 28),
+                      ),
+                      Spacer(),
+                      Text(
+                        'Бонусная система в 10% ! ',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_forward_sharp,
+                        size: 24,
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              16), // Removes the default rounded corners
+                        ),
+                        side: BorderSide(color: Colors.black, width: 2),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BonusesPage()),
+                        );
+                      },
+                      child: Text(
+                        'Перейти к системе',
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w800),
+                      )),
+                ),
+              ],
+            ),
+            decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 193, 224, 14),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black
+                        .withOpacity(0.2), // Цвет тени с прозрачностью
+                    spreadRadius: 2, // Насколько распространяется тень
+                    blurRadius: 5, // Размытие тени
+                    offset: Offset(0, 3), // Смещение тени (по оси X и Y)
+                  ),
+                ],
+                borderRadius: BorderRadius.all(Radius.circular(15))),
+          ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 25)),
+          Container(
+            padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 90,
+                      margin: EdgeInsets.only(left: 10),
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(
+                          8.0), // Внутренние отступы со всех сторон
+                      decoration: BoxDecoration(
+                        color:
+                            const Color.fromARGB(255, 93, 98, 102), // Цвет фона
+                        borderRadius: BorderRadius.circular(
+                            16), // Радиус для скругления углов
+                      ),
+                      child: Text(
+                        'Mercedes',
+                        style: TextStyle(
+                          color: const Color.fromARGB(
+                              255, 247, 233, 233), // Цвет текста
+                          fontSize: 12, // Размер шрифта
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Image.asset(
+                  'lib/assets/mercedes.png',
+                  width: 350,
+                  height: 150, // Высота изображения
+                  fit: BoxFit.cover, // Настройка подгонки изображения
+                ),
+                Divider(
+                  color: const Color.fromARGB(255, 59, 58, 58),
+                  thickness: 2,
+                ),
+                SizedBox(height: 8.0),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        'Mercedes E-200 2020(American)',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    )
+                  ], // Отступ между изображением и текстом
+                ),
+                SizedBox(height: 8.0),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        'PKR Locs',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                    Spacer(),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: const Color.fromARGB(255, 201, 182, 11),
+                          size: 24,
+                        ),
+                        Text(
+                          '4.4',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(padding: EdgeInsets.all(5))
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: const Color.fromARGB(255, 48, 44, 44)),
+          )
         ],
       ),
     );
