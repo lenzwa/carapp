@@ -35,8 +35,8 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: Container(
-            height: 100,
-            alignment: Alignment.center,
+            height: 70,
+            alignment: Alignment.topCenter,
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent, // Убираем цвет фона
