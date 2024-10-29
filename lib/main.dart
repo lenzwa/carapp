@@ -224,7 +224,7 @@ class MyHomePage extends StatelessWidget {
               onTap: () {
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => ContactsPage()),
+                  MaterialPageRoute(builder: (context) => AdressesPage()),
                   (Route<dynamic> route) => false,
                 );
               },
