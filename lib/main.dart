@@ -511,95 +511,106 @@ class ListOfItems extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(15))),
           ),
           Padding(padding: EdgeInsets.symmetric(vertical: 25)),
-          Container(
-            padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
-            margin: EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 90,
-                      margin: EdgeInsets.only(left: 10),
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(
-                          8.0), // Внутренние отступы со всех сторон
-                      decoration: BoxDecoration(
-                        color:
-                            const Color.fromARGB(255, 93, 98, 102), // Цвет фона
-                        borderRadius: BorderRadius.circular(
-                            16), // Радиус для скругления углов
-                      ),
-                      child: Text(
-                        'Mercedes',
-                        style: TextStyle(
+          GestureDetector(
+            onTap: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+                (Route<dynamic> route) => false,
+              );
+            },
+            child: Container(
+              padding:
+                  EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+              margin: EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 90,
+                        margin: EdgeInsets.only(left: 10),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(
+                            8.0), // Внутренние отступы со всех сторон
+                        decoration: BoxDecoration(
                           color: const Color.fromARGB(
-                              255, 247, 233, 233), // Цвет текста
-                          fontSize: 12, // Размер шрифта
+                              255, 93, 98, 102), // Цвет фона
+                          borderRadius: BorderRadius.circular(
+                              16), // Радиус для скругления углов
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                Image.asset(
-                  'lib/assets/mercedes.png',
-                  width: 350,
-                  height: 150, // Высота изображения
-                  fit: BoxFit.cover, // Настройка подгонки изображения
-                ),
-                Divider(
-                  color: const Color.fromARGB(255, 59, 58, 58),
-                  thickness: 2,
-                ),
-                SizedBox(height: 8.0),
-                Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        'Mercedes E-200 2020(American)',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w300),
-                      ),
-                    )
-                  ], // Отступ между изображением и текстом
-                ),
-                SizedBox(height: 8.0),
-                Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        'PKR Locs',
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    ),
-                    Spacer(),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.star,
-                          color: const Color.fromARGB(255, 201, 182, 11),
-                          size: 24,
-                        ),
-                        Text(
-                          '4.4',
+                        child: Text(
+                          'Mercedes',
                           style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                            color: const Color.fromARGB(
+                                255, 247, 233, 233), // Цвет текста
+                            fontSize: 12, // Размер шрифта
+                          ),
                         ),
-                        Padding(padding: EdgeInsets.all(5))
-                      ],
-                    )
-                  ],
-                )
-              ],
+                      )
+                    ],
+                  ),
+                  Image.asset(
+                    'lib/assets/mercedes.png',
+                    width: 350,
+                    height: 150, // Высота изображения
+                    fit: BoxFit.cover, // Настройка подгонки изображения
+                  ),
+                  Divider(
+                    color: const Color.fromARGB(255, 59, 58, 58),
+                    thickness: 2,
+                  ),
+                  SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          'Mercedes E-200 2020(American)',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300),
+                        ),
+                      )
+                    ], // Отступ между изображением и текстом
+                  ),
+                  SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          'PKR Locs',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                      Spacer(),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: const Color.fromARGB(255, 201, 182, 11),
+                            size: 24,
+                          ),
+                          Text(
+                            '4.4',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Padding(padding: EdgeInsets.all(5))
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: const Color.fromARGB(255, 48, 44, 44)),
             ),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: const Color.fromARGB(255, 48, 44, 44)),
           )
         ],
       ),

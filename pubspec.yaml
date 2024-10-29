@@ -40,6 +40,7 @@ dependencies:
   expandable: ^5.0.1
   url_launcher: ^6.1.5
   flutter_glow: ^0.3.0
+  fl_chart: ^0.69.0
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
   flutter_test:
