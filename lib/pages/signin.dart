@@ -1,9 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/main.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_svg/flutter_svg.dart';
+
+class LoginApi {
+  static final _googleSignIn = GoogleSignIn();
+  static Future<GoogleSignInAccount?> login() => _googleSignIn.signIn();
+  static Future signOut = _googleSignIn.signOut();
+}
 
 class SignInPage extends StatefulWidget {
   SignInPage({super.key});
@@ -242,7 +249,14 @@ class _SignInPageState extends State<SignInPage> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10.0, vertical: 15.0),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var user = await LoginApi.login();
+                      if (user != null) {
+                        print('oke nih');
+                        print(user.displayName);
+                        print(user.email);
+                      }
+                    },
                     child: Row(children: [
                       SvgPicture.asset(
                         'lib/assets/icons-google.svg',

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/bonuses.dart';
 import 'package:flutter_application_1/pages/contacts.dart';
+import 'package:flutter_application_1/pages/esender.dart';
 import 'package:flutter_application_1/pages/profile.dart';
 import 'package:flutter_application_1/pages/signin.dart';
 import 'package:flutter_application_1/pages/adresses.dart';
 import 'package:flutter_application_1/pages/questions.dart';
+import 'package:flutter_application_1/pages/test.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -369,11 +371,16 @@ class Footer extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          const Icon(
-            Icons.card_membership,
-            size: 24,
-            color: Colors.black,
-          ),
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EsenderPage()));
+              },
+              icon: Icon(
+                Icons.card_membership,
+                size: 24,
+                color: Colors.black,
+              )),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
